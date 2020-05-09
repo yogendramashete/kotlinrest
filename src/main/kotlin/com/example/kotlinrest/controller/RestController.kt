@@ -3,29 +3,33 @@ package com.example.kotlinrest.controller
 import com.example.kotlinrest.entity.User
 import com.example.kotlinrest.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/rest")
 class RestController {
 
     @Autowired
-    private val userService: UserService? = null
+    private lateinit var userService: UserService
 
-    @GetMapping("/rest/hello")
+    @GetMapping("/hello")
     fun greeting(@RequestParam("name") name: String): String {
-        return "hello$name";
+        return "hello $name";
     }
 
-    @PostMapping("/rest/user/save")
-    fun saveUser(@RequestParam("name") name: String, @RequestParam("age") age: Int) {
-        userService?.saveUser(name, age)
+    @PostMapping("/user/save")
+    fun saveUser(@RequestParam("name") name: String, @RequestParam("age") age: Integer) {
+        userService.saveUser(name, age)
     }
 
-    @GetMapping("/rest/user")
-    fun getUser(): User? {
-        return userService?.getUser()
+    @GetMapping("/user")
+    fun getUser(@RequestParam("name") name: String): User? {
+        return userService.getUser(name)
+    }
+
+    @GetMapping("/getUsers")
+    fun getUsers(): Iterable<User> {
+        return userService.getUsers()
     }
 }
