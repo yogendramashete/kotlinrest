@@ -2,17 +2,17 @@ package com.example.kotlinrest.entity
 
 import javax.persistence.*
 
+
 @Entity
-@Table(name = "user")
-data class User constructor(
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        @Column(name = "id")
-        var id: Long = -1,
+data class User(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    var id: Long? = null,
 
-        @Column(name = "name")
-        var name: String = "",
+    @Column(nullable = false)
+    val name: String? = null,
 
-        @Column(name = "age")
-        var age: Integer = Integer(-1)
+    @Column(nullable = false)
+    val age: Int? = null
 )

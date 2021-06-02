@@ -6,22 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class UserService() {
+class UserService(val userRepository: UserRepository) {
 
-    @Autowired
-    lateinit var userRepository: UserRepository
+    fun saveUser(user: User) = userRepository.save(user)
 
-    fun saveUser(name: String, age: Integer) {
-        val user = User(name = name, age = age)
-        userRepository.save(user)
-    }
+    fun getUserByName(name: String): User = userRepository.findByName(name)
 
-    fun getUser(name: String): User? {
-        return userRepository.findByName(name)
-    }
-
-    fun getUsers(): Iterable<User> {
-        return userRepository.findAll()
-    }
-
+    fun getUserList(): List<User> = userRepository.findAll()
 }

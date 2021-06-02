@@ -8,28 +8,25 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/rest")
-class RestController {
-
-    @Autowired
-    private lateinit var userService: UserService
+class RestController(val userService: UserService) {
 
     @GetMapping("/hello")
-    fun greeting(@RequestParam("name") name: String): String {
-        return "hello $name";
+    fun greeting(): String {
+        return "hello world";
     }
 
-    @PostMapping("/user/save")
-    fun saveUser(@RequestParam("name") name: String, @RequestParam("age") age: Integer) {
-        userService.saveUser(name, age)
+    @PostMapping("/users")
+    fun saveUser(@RequestBody user: User) {
+        userService.saveUser(user)
     }
 
-    @GetMapping("/user")
-    fun getUser(@RequestParam("name") name: String): User? {
-        return userService.getUser(name)
+    @GetMapping("/users/{name}")
+    fun getUser(@PathVariable("name") name: String): User? {
+        return userService.getUserByName(name)
     }
 
-    @GetMapping("/getUsers")
+    @GetMapping("/users")
     fun getUsers(): Iterable<User> {
-        return userService.getUsers()
+        return userService.getUserList()
     }
 }
