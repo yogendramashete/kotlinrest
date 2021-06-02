@@ -11,22 +11,15 @@ import org.springframework.web.bind.annotation.RestController
 class RestController(val userService: UserService) {
 
     @GetMapping("/hello")
-    fun greeting(): String {
-        return "hello world";
-    }
+    fun greeting(): String = "hello world"
 
     @PostMapping("/users")
-    fun saveUser(@RequestBody user: User) {
+    fun saveUser(@RequestBody user: User) =
         userService.saveUser(user)
-    }
 
     @GetMapping("/users/{name}")
-    fun getUser(@PathVariable("name") name: String): User? {
-        return userService.getUserByName(name)
-    }
+    fun getUser(@PathVariable("name") name: String): User = userService.getUserByName(name)
 
     @GetMapping("/users")
-    fun getUsers(): Iterable<User> {
-        return userService.getUserList()
-    }
+    fun getUsers(): List<User> = userService.getUserList()
 }
